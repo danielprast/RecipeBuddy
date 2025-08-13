@@ -8,7 +8,7 @@
 import Foundation
 
 
-public enum RebudError: LocalizedError {
+public enum RebudError: LocalizedError, Equatable {
 
   case custom(String)
   case emptyResult
@@ -28,6 +28,23 @@ public enum RebudError: LocalizedError {
       return "Please check your network connection"
     case .emptyResult:
       return "Data not found"
+    }
+  }
+
+  public static func ==(lhs: RebudError, rhs: RebudError) -> Bool {
+    switch (lhs, rhs) {
+    case (custom(let lhsMessage), custom(let rhsMessage)):
+      lhsMessage == rhsMessage
+    case (internalServerError, internalServerError):
+      true
+    case (parsingError, parsingError):
+      true
+    case (connectionProblem, connectionProblem):
+      true
+    case (emptyResult, emptyResult):
+      true
+    default:
+      false
     }
   }
 }
