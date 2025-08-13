@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		204FCB6B2E4C814E005B9C6C /* RebudData in Frameworks */ = {isa = PBXBuildFile; productRef = 204FCB6A2E4C814E005B9C6C /* RebudData */; };
 		207999952E4C39C3003B308A /* RebudData in Frameworks */ = {isa = PBXBuildFile; productRef = 207999942E4C39C3003B308A /* RebudData */; };
+		20CCA75C2E4CEF61004576F2 /* BZConnectionChecker in Frameworks */ = {isa = PBXBuildFile; productRef = 20CCA75B2E4CEF61004576F2 /* BZConnectionChecker */; };
+		20CCA75E2E4CEF64004576F2 /* BZUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 20CCA75D2E4CEF64004576F2 /* BZUtil */; };
+		20CCA7602E4CEF69004576F2 /* BZConnectionChecker in Frameworks */ = {isa = PBXBuildFile; productRef = 20CCA75F2E4CEF69004576F2 /* BZConnectionChecker */; };
+		20CCA7622E4CEF6C004576F2 /* BZUtil in Frameworks */ = {isa = PBXBuildFile; productRef = 20CCA7612E4CEF6C004576F2 /* BZUtil */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +75,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20CCA75C2E4CEF61004576F2 /* BZConnectionChecker in Frameworks */,
 				207999952E4C39C3003B308A /* RebudData in Frameworks */,
+				20CCA75E2E4CEF64004576F2 /* BZUtil in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +85,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				20CCA7602E4CEF69004576F2 /* BZConnectionChecker in Frameworks */,
 				204FCB6B2E4C814E005B9C6C /* RebudData in Frameworks */,
+				20CCA7622E4CEF6C004576F2 /* BZUtil in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +151,8 @@
 			name = RecipeBuddy;
 			packageProductDependencies = (
 				207999942E4C39C3003B308A /* RebudData */,
+				20CCA75B2E4CEF61004576F2 /* BZConnectionChecker */,
+				20CCA75D2E4CEF64004576F2 /* BZUtil */,
 			);
 			productName = RecipeBuddy;
 			productReference = 20EF5AE72E4B8EBC005E6423 /* RecipeBuddy.app */;
@@ -167,6 +177,8 @@
 			name = RecipeBuddyTests;
 			packageProductDependencies = (
 				204FCB6A2E4C814E005B9C6C /* RebudData */,
+				20CCA75F2E4CEF69004576F2 /* BZConnectionChecker */,
+				20CCA7612E4CEF6C004576F2 /* BZUtil */,
 			);
 			productName = RecipeBuddyTests;
 			productReference = 20EF5AF42E4B8EBE005E6423 /* RecipeBuddyTests.xctest */;
@@ -227,6 +239,9 @@
 			);
 			mainGroup = 20EF5ADE2E4B8EBC005E6423;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				20CCA7562E4CEDF4004576F2 /* XCRemoteSwiftPackageReference "BezetQit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 20EF5AE82E4B8EBC005E6423 /* Products */;
 			projectDirPath = "";
@@ -499,6 +514,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danielprast.RecipeBuddyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -517,6 +533,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.5;
 				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.danielprast.RecipeBuddyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -599,6 +616,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		20CCA7562E4CEDF4004576F2 /* XCRemoteSwiftPackageReference "BezetQit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielprast/BezetQit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		204FCB6A2E4C814E005B9C6C /* RebudData */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -607,6 +635,26 @@
 		207999942E4C39C3003B308A /* RebudData */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RebudData;
+		};
+		20CCA75B2E4CEF61004576F2 /* BZConnectionChecker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20CCA7562E4CEDF4004576F2 /* XCRemoteSwiftPackageReference "BezetQit" */;
+			productName = BZConnectionChecker;
+		};
+		20CCA75D2E4CEF64004576F2 /* BZUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20CCA7562E4CEDF4004576F2 /* XCRemoteSwiftPackageReference "BezetQit" */;
+			productName = BZUtil;
+		};
+		20CCA75F2E4CEF69004576F2 /* BZConnectionChecker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20CCA7562E4CEDF4004576F2 /* XCRemoteSwiftPackageReference "BezetQit" */;
+			productName = BZConnectionChecker;
+		};
+		20CCA7612E4CEF6C004576F2 /* BZUtil */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 20CCA7562E4CEDF4004576F2 /* XCRemoteSwiftPackageReference "BezetQit" */;
+			productName = BZUtil;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

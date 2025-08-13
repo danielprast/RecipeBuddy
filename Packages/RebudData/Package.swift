@@ -36,7 +36,17 @@ let package = Package(
     ),
     .testTarget(
       name: "RebudDataTests",
-      dependencies: ["RebudData"]
+      dependencies: [
+        "RebudData",
+        .product(
+          name: "BZConnectionChecker",
+          package: "BezetQit"
+        ),
+        .product(
+          name: "BZUtil",
+          package: "BezetQit"
+        )
+      ]
     ),
   ]
 )

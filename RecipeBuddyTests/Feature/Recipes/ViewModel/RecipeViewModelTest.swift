@@ -13,11 +13,14 @@ import RebudData
 final class RecipeViewModelTest: XCTestCase {
 
   func makeSUT() async -> RecipeViewModel {
+    let repository = RecipeRepositoryImplementation(
+      networkConnectionChecker: MockNetworkConnectionChecker(isConnected: true),
+      recipeRemoteDataSource: RecipeJsonDataSource(),
+      recipeLocalDataStore: RecipeLocalDataStoreImpl()
+    )
     return await RecipeViewModel(
-      repository: RecipeRepositoryImplementation(
-        networkConnectionChecker: MockNetworkConnectionChecker(isConnected: true),
-        recipeRemoteDataSource: RecipeJsonDataSource()
-      )
+      repository: repository,
+      favoritedRecipeRepository: repository
     )
   }
 
