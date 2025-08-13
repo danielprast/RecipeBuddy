@@ -6,16 +6,28 @@
 //
 
 import SwiftUI
+import BZConnectionChecker
 
 @main
 struct RecipeBuddyApp: App {
 
-  @StateObject var mainViewModel = MainViewModel()
+  let mainDependencyContainer: MainDependencyContainer
+
+  init() {
+    let mainDC = MainDependencyContainer()
+    mainDependencyContainer = mainDC
+    _connectionModel = StateObject(wrappedValue: mainDC.connectionReachabilityModel)
+    _mainViewModel = StateObject(wrappedValue: mainDC.mainViewModel)
+  }
+
+  @StateObject var mainViewModel: MainViewModel
+  @StateObject var connectionModel: ConnectionReachabilityModel
 
   var body: some Scene {
     WindowGroup {
-      MainView()
+      MainView(dependencyContainer: self.mainDependencyContainer)
         .environmentObject(mainViewModel)
+        .environmentObject(connectionModel)
     }
   }
 }
