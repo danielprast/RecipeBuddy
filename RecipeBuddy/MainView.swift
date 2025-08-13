@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import RebudData
 
 struct MainView: View {
 
@@ -16,7 +17,8 @@ struct MainView: View {
       Image(systemName: "globe")
         .imageScale(.large)
         .foregroundStyle(.tint)
-      Text("Recipe Buddy! Data: \(mainViewModel.unitName)")
+      Text("APIKEY: \(RebudConstant.apikey())")
+      Text("BaseURL: \(RebudConstant.baseUrl())")
     }
     .padding()
   }

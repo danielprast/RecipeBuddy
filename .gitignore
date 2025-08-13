@@ -2,6 +2,10 @@
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
+## Secret
+# This file contains sensitive data. It should be ignored! Uncomment to ignore it.
+# RecipeBuddy/Config/Secret.xcconfig
+
 ## User settings
 xcuserdata/
 

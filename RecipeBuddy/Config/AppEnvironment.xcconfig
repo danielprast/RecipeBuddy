@@ -1,0 +1,24 @@
+//
+//  AppEnvironment.xcconfig
+//  RecipeBuddy
+//
+//  Created by Daniel Prastiwa on 13/08/25.
+//
+
+https_scheme = https:/$()/
+http_scheme = http:/$()/
+
+PRODUCT_BUNDLE_IDENTIFIER_DEV = com.danielprast.RecipeBuddy.dev
+PRODUCT_BUNDLE_IDENTIFIER_PROD = com.danielprast.RecipeBuddy
+
+PRODUCT_NAME_DEV = Recipe Buddy (Dev)
+PRODUCT_NAME_PROD = Recipe Buddy
+
+MARKETING_VERSION_DEV = 0.0.1
+MARKETING_VERSION_PROD = 1.0.0
+
+CURRENT_PROJECT_VERSION_DEV = 1
+CURRENT_PROJECT_VERSION_PROD = 1
+
+BASE_URL_DEV = $(https_scheme)dev.recipebuddy.com
+BASE_URL_PROD = $(https_scheme)recipebuddy.com

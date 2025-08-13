@@ -1,0 +1,19 @@
+//
+//  Prod.xcconfig
+//  RecipeBuddy
+//
+//  Created by Daniel Prastiwa on 13/08/25.
+//
+
+#include "./AppEnvironment.xcconfig"
+#include "./Secret.xcconfig"
+
+
+PRODUCT_BUNDLE_IDENTIFIER = $(PRODUCT_BUNDLE_IDENTIFIER_PROD)
+APP_DISPLAY_NAME = $(PRODUCT_NAME_PROD)
+MARKETING_VERSION = $(MARKETING_VERSION_PROD)
+CURRENT_PROJECT_VERSION = $(CURRENT_PROJECT_VERSION_PROD)
+
+
+BASE_URL = $(BASE_URL_PROD)
+APIKEY = $(APIKEY_PROD)
