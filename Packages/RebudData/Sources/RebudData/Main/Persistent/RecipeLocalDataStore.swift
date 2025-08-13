@@ -11,9 +11,9 @@ import BZUtil
 
 public protocol RecipeLocalDataStore: Sendable {
 
-  func getFavoritedRecipes() async -> [RecipeResponseElement]
+  func readFavoritedRecipes() async -> [RecipeResponseElement]
 
-  func addToFavorite(_ recipe: RecipeResponseElement) async throws -> Bool
+  func saveFavorite(_ recipe: RecipeResponseElement) async throws -> Bool
 
   func removeFavorite(_ recipe: RecipeResponseElement) async throws -> Bool
 
@@ -33,7 +33,7 @@ public final actor RecipeLocalDataStoreImpl: RecipeLocalDataStore {
     )
   }
 
-  public func getFavoritedRecipes() async -> [RecipeResponseElement] {
+  public func readFavoritedRecipes() async -> [RecipeResponseElement] {
     guard
       let persistentData = UserDefaults.standard.dictionary(forKey: RecipeLocalData().favoritedDataKey),
       let favoritedData = persistentData as? [String : RecipeResponseElement]
@@ -44,7 +44,7 @@ public final actor RecipeLocalDataStoreImpl: RecipeLocalDataStore {
     return favoritedRecipes.map { $0.value }
   }
   
-  public func addToFavorite(_ recipe: RecipeResponseElement) async throws -> Bool {
+  public func saveFavorite(_ recipe: RecipeResponseElement) async throws -> Bool {
     favoritedRecipes[recipe.id] = recipe
     await saveFavoritedRecipesToDisk()
     return true

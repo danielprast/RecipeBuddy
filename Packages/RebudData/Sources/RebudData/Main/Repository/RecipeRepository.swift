@@ -16,18 +16,35 @@ public protocol RecipeRepository {
 }
 
 
-public actor RecipeRepositoryImplementation: RecipeRepository {
+public protocol FavoritedRecipeRepository {
 
+  func getFavoritedRecipes() async -> [RecipeEntity]
+
+  func addToFavorite(_ recipe: RecipeEntity) async throws -> Bool
+
+  func removeFavorite(_ recipe: RecipeEntity) async throws -> Bool
+}
+
+
+// MARK: - •
+
+public actor RecipeRepositoryImplementation {
+
+  private let recipeLocalDataStore: RecipeLocalDataStore
   private let recipeRemoteDataSource: RecipeRemoteDataSource
   private let networkConnectionChecker: NetworkConnectionChecker
 
   public init(
     networkConnectionChecker: NetworkConnectionChecker,
-    recipeRemoteDataSource: RecipeRemoteDataSource
+    recipeRemoteDataSource: RecipeRemoteDataSource,
+    recipeLocalDataStore: RecipeLocalDataStore
   ) {
     self.networkConnectionChecker = networkConnectionChecker
     self.recipeRemoteDataSource = recipeRemoteDataSource
+    self.recipeLocalDataStore = recipeLocalDataStore
   }
+
+  // MARK: - • Recipe Repository
 
   public func getRecipes(title: String) async throws -> [RecipeEntity] {
     if await !networkConnectionChecker.isConnected {
@@ -42,4 +59,33 @@ public actor RecipeRepositoryImplementation: RecipeRepository {
     }
   }
 
+  // MARK: - • Favorited Recipe Repository
+
+  public func getFavoritedRecipes() async -> [RecipeEntity] {
+    let recipes = await recipeLocalDataStore.readFavoritedRecipes()
+    return recipes.map { RecipeEntity.mapFromResponse($0) }
+  }
+
+  public func addToFavorite(_ recipe: RecipeEntity) async throws -> Bool {
+    do {
+      let element = recipe.mapToRecipeElement()
+      return try await recipeLocalDataStore.saveFavorite(element)
+    } catch {
+      throw (error as! RebudError)
+    }
+  }
+
+  public func removeFavorite(_ recipe: RecipeEntity) async throws -> Bool {
+    do {
+      let element = recipe.mapToRecipeElement()
+      return try await recipeLocalDataStore.removeFavorite(element)
+    } catch {
+      throw (error as! RebudError)
+    }
+  }
+
 }
+
+
+extension RecipeRepositoryImplementation: RecipeRepository,
+                                          FavoritedRecipeRepository {}

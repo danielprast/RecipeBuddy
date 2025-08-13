@@ -36,6 +36,24 @@ public struct RecipeEntity: Sendable, Identifiable, Equatable {
     self.steps = steps
   }
 
+  public func mapToRecipeElement() -> RecipeResponseElement {
+    .init(
+      id: id,
+      title: title,
+      tags: tags.map { $0.tag
+      },
+      minutes: minutes,
+      image: image,
+      ingredients: ingredients.map {
+        RecipeResponseElement.Ingredient(
+          name: $0.name,
+          quantity: $0.quantity
+        )
+      },
+      steps: steps
+    )
+  }
+
   public static func mapFromResponse(_ response: RecipeResponseElement) -> RecipeEntity {
     _mapFromResponse(response)
   }
