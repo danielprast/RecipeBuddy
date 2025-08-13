@@ -1,13 +1,13 @@
 {
-  "originHash" : "d133b9eccdddb39eabcf4004091c52dd5c5e46ae24e495fb38c5915fc6befeef",
+  "originHash" : "76a863119c1dd88cfe09c92c690e1a62f755554d59a5d6873420971141062b6c",
   "pins" : [
     {
       "identity" : "bezetqit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/danielprast/BezetQit.git",
       "state" : {
-        "revision" : "b8fb2791ca8a0f467134ac2348e56a50bf258da1",
-        "version" : "1.0.0"
+        "revision" : "87db1c02c64bc393b094abe7742c8aed5222b30f",
+        "version" : "1.1.0"
       }
     }
   ],
