@@ -76,7 +76,7 @@ struct RecipeListView: View {
         }
         .swipeActions {
           Button(role: .none) {
-            recipeData.addToFavorite(recipe)
+            recipeData.handleFavorite(recipe)
           } label: {
             Label("Add to Favorite", systemImage: "star.circle.fill")
           }

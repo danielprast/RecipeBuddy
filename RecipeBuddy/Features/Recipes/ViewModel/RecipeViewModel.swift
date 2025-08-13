@@ -129,6 +129,15 @@ final class RecipeViewModel: ObservableObject {
     }
   }
 
+  func handleFavorite(_ recipe: RecipeEntity) {
+    let isFavorited = checkFavorite(recipe)
+    guard isFavorited else {
+      addToFavorite(recipe)
+      return
+    }
+    removeFavorite(recipe)
+  }
+
   func addToFavorite(_ recipe: RecipeEntity) {
     Task { [favoritedRecipeRepository] in
       do {
@@ -136,6 +145,17 @@ final class RecipeViewModel: ObservableObject {
         getFavoritedRecipes()
       } catch {
         clog("failed to add favorite recipe", (error as! RebudError).errorMessage)
+      }
+    }
+  }
+
+  func removeFavorite(_ recipe: RecipeEntity) {
+    Task { [favoritedRecipeRepository] in
+      do {
+        _ = try await favoritedRecipeRepository.removeFavorite(recipe)
+        getFavoritedRecipes()
+      } catch {
+        clog("failed to remove favorite recipe", (error as! RebudError).errorMessage)
       }
     }
   }
