@@ -16,7 +16,8 @@ final class RecipeRepositoryTest: XCTestCase {
   func makeSUT(isNetworkAvailable: Bool) -> RecipeRepository {
     RecipeRepositoryImplementation(
       networkConnectionChecker: MockNetworkConnectionChecker(isConnected: isNetworkAvailable),
-      recipeRemoteDataSource: RecipeJsonDataSource()
+      recipeRemoteDataSource: RecipeJsonDataSource(),
+      recipeLocalDataStore: RecipeLocalDataStoreImpl()
     )
   }
 
