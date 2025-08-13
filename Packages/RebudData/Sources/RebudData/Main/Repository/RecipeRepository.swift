@@ -35,7 +35,7 @@ public actor RecipeRepositoryImplementation: RecipeRepository {
     }
 
     do {
-      let responses = try await recipeRemoteDataSource.fetchRecipes()
+      let responses = try await recipeRemoteDataSource.fetchRecipes(title: "")
       return responses.map { RecipeEntity.mapFromResponse($0) }
     } catch {
       throw error as? RebudError ?? RebudError.custom("Failed to get recipes")

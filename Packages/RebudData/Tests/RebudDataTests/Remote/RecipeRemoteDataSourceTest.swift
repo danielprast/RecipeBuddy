@@ -22,10 +22,19 @@ final class RecipeRemoteDataSourceTest: XCTestCase {
     RecipeJsonDataSource()
   }
 
-  func testFetchRecipesJson() async {
+  func test_FetchRecipesJsonWithNoParam_ReturnAllRecipes() async {
     do {
-      let result = try await sut.fetchRecipes()
+      let result = try await sut.fetchRecipes(title: "")
       XCTAssertTrue(!result.isEmpty)
+    } catch {
+      print("Failed to fetch recipes")
+    }
+  }
+
+  func test_FetchRecipesJsonWithParamTitleVeggiePasta_ReturnFilteredRecipes() async {
+    do {
+      let result = try await sut.fetchRecipes(title: "Veggie Pasta")
+      XCTAssertEqual(result.first!.id, "r2")
     } catch {
       print("Failed to fetch recipes")
     }
