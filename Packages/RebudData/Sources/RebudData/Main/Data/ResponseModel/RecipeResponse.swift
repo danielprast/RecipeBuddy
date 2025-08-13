@@ -11,7 +11,7 @@ import Foundation
 public typealias RecipeResponse = [RecipeResponseElement]
 
 
-public struct RecipeResponseElement: Codable {
+public struct RecipeResponseElement: Codable, Sendable {
 
   public let id, title: String
   public let tags: [String]
@@ -63,7 +63,7 @@ public struct RecipeResponseElement: Codable {
 
   // MARK: - •
 
-  public struct Ingredient: Codable {
+  public struct Ingredient: Codable, Sendable {
 
     public let name, quantity: String
 
