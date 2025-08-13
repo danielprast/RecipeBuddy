@@ -11,12 +11,12 @@ import RebudData
 
 
 @MainActor
-public class MainViewModel: ObservableObject {
+class MainViewModel: ObservableObject {
 
-  public init() {
+  init() {
     clog("inited", "\(Self.self)")
   }
 
-  public var unitName: String { "\(Self.self)" }
+  var unitName: String { "\(Self.self)" }
 
 }

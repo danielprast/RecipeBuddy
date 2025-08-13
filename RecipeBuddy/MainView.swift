@@ -7,23 +7,19 @@
 
 import SwiftUI
 import RebudData
+import BZConnectionChecker
+
 
 struct MainView: View {
 
-  @EnvironmentObject var mainViewModel: MainViewModel
+  let dependencyContainer: MainDependencyContainer
+  @EnvironmentObject var connectionModel: ConnectionReachabilityModel
+
+  init(dependencyContainer: MainDependencyContainer) {
+    self.dependencyContainer = dependencyContainer
+  }
 
   var body: some View {
-    VStack {
-      Image(systemName: "globe")
-        .imageScale(.large)
-        .foregroundStyle(.tint)
-      Text("APIKEY: \(RebudConstant.apikey())")
-      Text("BaseURL: \(RebudConstant.baseUrl())")
-    }
-    .padding()
+    RecipeScreen(dependencyContainer: self.dependencyContainer)
   }
-}
-
-#Preview {
-  MainView()
 }
