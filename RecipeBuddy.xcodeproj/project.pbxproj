@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		204FCB6B2E4C814E005B9C6C /* RebudData in Frameworks */ = {isa = PBXBuildFile; productRef = 204FCB6A2E4C814E005B9C6C /* RebudData */; };
 		207999952E4C39C3003B308A /* RebudData in Frameworks */ = {isa = PBXBuildFile; productRef = 207999942E4C39C3003B308A /* RebudData */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				204FCB6B2E4C814E005B9C6C /* RebudData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,6 +166,7 @@
 			);
 			name = RecipeBuddyTests;
 			packageProductDependencies = (
+				204FCB6A2E4C814E005B9C6C /* RebudData */,
 			);
 			productName = RecipeBuddyTests;
 			productReference = 20EF5AF42E4B8EBE005E6423 /* RecipeBuddyTests.xctest */;
@@ -597,6 +600,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		204FCB6A2E4C814E005B9C6C /* RebudData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RebudData;
+		};
 		207999942E4C39C3003B308A /* RebudData */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RebudData;
