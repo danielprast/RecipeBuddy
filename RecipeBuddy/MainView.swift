@@ -20,6 +20,6 @@ struct MainView: View {
   }
 
   var body: some View {
-    RecipeScreen(dependencyContainer: self.dependencyContainer)
+    RecipeNavigation(dependencyContainer: dependencyContainer)
   }
 }

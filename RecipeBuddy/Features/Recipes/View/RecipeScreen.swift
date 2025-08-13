@@ -13,31 +13,28 @@ import BZUtil
 
 struct RecipeScreen: View {
 
-  let dependencyContainer: MainDependencyContainer
   @EnvironmentObject var connectionModel: ConnectionReachabilityModel
-  @StateObject var recipeData: RecipeViewModel
+  @ObservedObject var recipeData: RecipeViewModel
   @State var counter = 0
 
-  init(dependencyContainer: MainDependencyContainer) {
-    self.dependencyContainer = dependencyContainer
-    _recipeData = StateObject(wrappedValue: dependencyContainer.makeRecipeViewModel())
+  init(recipeData: RecipeViewModel) {
+    self.recipeData = recipeData
   }
 
   var body: some View {
     ZStack {
       if let error = recipeData.getRecipesError {
-        Text(error.errorMessage)
-          .padding()
+        ErrorView(message: error.errorMessage)
       } else {
         if recipeData.recipes.isEmpty {
-          Text("No recipes found!")
-            .padding()
+          ErrorView(message: "No recipes found!")
         } else {
           RecipeListView(recipeData: recipeData)
             .environmentObject(connectionModel)
         }
       }
     }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
     .onReceive(
       connectionModel.$isInternetAvailable,
       perform: { isAvailable in
@@ -61,20 +58,40 @@ struct RecipeListView: View {
   var body: some View {
     List {
       ForEach(recipeData.recipes, id: \.id) { recipe in
-        VStack(alignment: .leading) {
-          Text(recipe.title)
-            .font(.body)
-          Text("\(recipe.minutes) minutes")
-            .font(.caption)
-        }
-        .swipeActions {
-          Button(role: .none) {
-            clog("add to favorites", "...")
-          } label: {
-            Label("Add to Favorite", systemImage: "star.circle.fill")
+        RecipeItem(recipe: recipe)
+          .frame(maxWidth: .infinity, maxHeight: 56)
+          .cornerRadius(8)
+          .onTapGesture {
+            recipeData.detailRecipe = recipe
+            recipeData.presentNext(route: .RecipeDetail)
           }
-        }
+          .swipeActions {
+            Button(role: .none) {
+              clog("add to favorites", "...")
+            } label: {
+              Label("Add to Favorite", systemImage: "star.circle.fill")
+            }
+          }
       }
     }
   }
+}
+
+
+struct RecipeItem: View {
+
+  let recipe: RecipeEntity
+
+  var body: some View {
+    HStack {
+      VStack(alignment: .leading) {
+        Text(recipe.title)
+          .font(.body)
+        Text("\(recipe.minutes) minutes")
+          .font(.caption)
+      }
+      Spacer()
+    }
+  }
+
 }
