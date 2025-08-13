@@ -17,9 +17,14 @@ final class MainDependencyContainer {
   let connectionReachabilityModel: ConnectionReachabilityModel
   let connectionReachability: ConnectionReachability
   let networkConnectionChecker: NetworkConnectionChecker
+  let recipeLocalDataStore: RecipeLocalDataStore
   let mainViewModel: MainViewModel
 
   init() {
+    func makeRecipeLocalDataStore() -> RecipeLocalDataStore {
+      return RecipeLocalDataStoreImpl()
+    }
+
     func makeConnectionReachability() -> ConnectionReachability { ConnectionReachability() }
 
     func makeConnectionReachabilityModel(
@@ -37,8 +42,10 @@ final class MainDependencyContainer {
       MainViewModel()
     }
 
+    let recipeLocalDataStore = makeRecipeLocalDataStore()
     let connectionReachability = makeConnectionReachability()
     self.connectionReachability = connectionReachability
+    self.recipeLocalDataStore = recipeLocalDataStore
     self.networkConnectionChecker = makeNetworkConnectionChecker(connReachability: connectionReachability)
     self.connectionReachabilityModel = makeConnectionReachabilityModel(
       connReachability: connectionReachability,
@@ -51,9 +58,13 @@ final class MainDependencyContainer {
     let recipeRemoteDataSource = RecipeJsonDataSource()
     let recipeRepository = RecipeRepositoryImplementation(
       networkConnectionChecker: self.networkConnectionChecker,
-      recipeRemoteDataSource: recipeRemoteDataSource
+      recipeRemoteDataSource: recipeRemoteDataSource,
+      recipeLocalDataStore: self.recipeLocalDataStore
     )
-    return RecipeViewModel(repository: recipeRepository)
+    return RecipeViewModel(
+      repository: recipeRepository,
+      favoritedRecipeRepository: recipeRepository
+    )
   }
 
 }

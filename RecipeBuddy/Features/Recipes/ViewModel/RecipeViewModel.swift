@@ -15,9 +15,14 @@ import BZUtil
 final class RecipeViewModel: ObservableObject {
 
   let repository: RecipeRepository
+  let favoritedRecipeRepository: FavoritedRecipeRepository
 
-  init(repository: RecipeRepository) {
+  init(
+    repository: RecipeRepository,
+    favoritedRecipeRepository: FavoritedRecipeRepository
+  ) {
     self.repository = repository
+    self.favoritedRecipeRepository = favoritedRecipeRepository
     clog("inited", "\(Self.self)")
 
     $titleSearch
