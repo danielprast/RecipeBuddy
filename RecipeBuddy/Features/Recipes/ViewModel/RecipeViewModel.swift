@@ -20,9 +20,15 @@ final class RecipeViewModel: ObservableObject {
     clog("inited", "\(Self.self)")
   }
 
+  @Published var routePath: [RecipeRoute] = []
+  @Published var detailRecipe: RecipeEntity?
   @Published var recipes: [RecipeEntity] = []
   @Published var getRecipesError: RebudError?
   @Published var titleSearch: String = ""
+
+  var detailRecipeTitle: String {
+    detailRecipe?.title ?? ""
+  }
 
   func update(titleSearch title: String) {
     titleSearch = title
@@ -30,6 +36,10 @@ final class RecipeViewModel: ObservableObject {
 
   func update(recipes: [RecipeEntity]) {
     self.recipes = recipes
+  }
+
+  func presentNext(route: RecipeRoute) {
+    routePath.append(route)
   }
 
   func getInitialRecipes() {
@@ -59,4 +69,11 @@ final class RecipeViewModel: ObservableObject {
     }
   }
 
+}
+
+// MARK: - •
+
+enum RecipeRoute {
+  case RecipeList
+  case RecipeDetail
 }
