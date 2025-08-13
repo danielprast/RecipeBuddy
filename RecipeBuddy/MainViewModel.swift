@@ -13,7 +13,9 @@ import RebudData
 @MainActor
 public class MainViewModel: ObservableObject {
 
-  public init() {}
+  public init() {
+    clog("inited", "\(Self.self)")
+  }
 
   public var unitName: String { "\(Self.self)" }
 

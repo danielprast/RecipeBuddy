@@ -11,9 +11,25 @@ let package = Package(
       targets: ["RebudData"]
     ),
   ],
+  dependencies: [
+    .package(
+      url: "https://github.com/danielprast/BezetQit.git",
+      from: Version("1.0.0")
+    )
+  ],
   targets: [
     .target(
       name: "RebudData",
+      dependencies: [
+        .product(
+          name: "BZConnectionChecker",
+          package: "BezetQit"
+        ),
+        .product(
+          name: "BZUtil",
+          package: "BezetQit"
+        )
+      ],
       resources: [
         .process("Resources")
       ]
