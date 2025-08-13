@@ -9,10 +9,9 @@ import Foundation
 import BZUtil
 
 
-public protocol RecipeRemoteDataSource {
+public protocol RecipeRemoteDataSource: Sendable {
 
   func fetchRecipes() async throws -> [RecipeResponseElement]
-
 }
 
 
