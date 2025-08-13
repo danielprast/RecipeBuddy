@@ -5,6 +5,10 @@
 ## User settings
 xcuserdata/
 
+## Build generated
+build/
+DerivedData/
+
 ## Obj-C/Swift specific
 *.hmap
 
@@ -16,6 +20,9 @@ xcuserdata/
 ## Playgrounds
 timeline.xctimeline
 playground.xcworkspace
+
+*.DS_Store
+*/.DS_Store
 
 # Swift Package Manager
 #
