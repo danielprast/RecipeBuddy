@@ -66,6 +66,10 @@ final class RecipeViewModel: ObservableObject {
     isLoadingGetRecipes = show
   }
 
+  func checkFavorite(_ recipe: RecipeEntity) -> Bool {
+    favoritedRecipesReference[recipe.id] != nil
+  }
+
   // MARK: - • Navigation
 
   func presentNext(route: RecipeRoute) {
@@ -129,9 +133,7 @@ final class RecipeViewModel: ObservableObject {
     Task { [favoritedRecipeRepository] in
       do {
         _ = try await favoritedRecipeRepository.addToFavorite(recipe)
-        let favoritedRecipes = await favoritedRecipeRepository.favoritedRecipes
-        self.favoritedRecipesReference = favoritedRecipes
-        clog("add to favorite successfully", self.favoritedRecipes)
+        getFavoritedRecipes()
       } catch {
         clog("failed to add favorite recipe", (error as! RebudError).errorMessage)
       }

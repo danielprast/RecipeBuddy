@@ -64,20 +64,23 @@ struct RecipeListView: View {
   var body: some View {
     List {
       ForEach(recipeData.recipes, id: \.id) { recipe in
-        RecipeItem(recipe: recipe)
-          .frame(maxWidth: .infinity, maxHeight: 56)
-          .cornerRadius(8)
-          .onTapGesture {
-            recipeData.detailRecipe = recipe
-            recipeData.presentNext(route: .RecipeDetail)
+        RecipeItem(
+          recipe: recipe,
+          isFavorite: recipeData.checkFavorite(recipe)
+        )
+        .frame(maxWidth: .infinity, maxHeight: 56)
+        .cornerRadius(8)
+        .onTapGesture {
+          recipeData.detailRecipe = recipe
+          recipeData.presentNext(route: .RecipeDetail)
+        }
+        .swipeActions {
+          Button(role: .none) {
+            recipeData.addToFavorite(recipe)
+          } label: {
+            Label("Add to Favorite", systemImage: "star.circle.fill")
           }
-          .swipeActions {
-            Button(role: .none) {
-              recipeData.addToFavorite(recipe)
-            } label: {
-              Label("Add to Favorite", systemImage: "star.circle.fill")
-            }
-          }
+        }
       }
     }
   }
@@ -87,6 +90,7 @@ struct RecipeListView: View {
 struct RecipeItem: View {
 
   let recipe: RecipeEntity
+  let isFavorite: Bool
 
   var body: some View {
     HStack {
@@ -97,6 +101,12 @@ struct RecipeItem: View {
           .font(.caption)
       }
       Spacer()
+      if isFavorite {
+        Image(systemName: "star.circle.fill")
+          .resizable()
+          .frame(width: 24, height: 24)
+          .foregroundStyle(Color.blue)
+      }
     }
   }
 
