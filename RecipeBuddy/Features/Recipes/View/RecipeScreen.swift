@@ -73,7 +73,7 @@ struct RecipeListView: View {
           }
           .swipeActions {
             Button(role: .none) {
-              clog("add to favorites", "...")
+              recipeData.addToFavorite(recipe)
             } label: {
               Label("Add to Favorite", systemImage: "star.circle.fill")
             }

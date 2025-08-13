@@ -11,7 +11,14 @@ import Foundation
 public typealias RecipeResponse = [RecipeResponseElement]
 
 
-public struct RecipeResponseElement: Codable, Sendable {
+public struct RecipeResponseElement: Codable, Sendable, Hashable {
+  public static func == (lhs: RecipeResponseElement, rhs: RecipeResponseElement) -> Bool {
+    lhs.id == rhs.id
+  }
+
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(id)
+  }
 
   public let id, title: String
   public let tags: [String]
@@ -63,7 +70,7 @@ public struct RecipeResponseElement: Codable, Sendable {
 
   // MARK: - •
 
-  public struct Ingredient: Codable, Sendable {
+  public struct Ingredient: Codable, Sendable, Hashable {
 
     public let name, quantity: String
 

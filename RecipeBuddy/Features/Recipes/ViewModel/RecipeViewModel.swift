@@ -35,6 +35,8 @@ final class RecipeViewModel: ObservableObject {
         self?.getRecipes()
       }
       .store(in: &cancellables)
+
+    getFavoritedRecipes()
   }
 
   @Published var routePath: [RecipeRoute] = []
@@ -43,6 +45,8 @@ final class RecipeViewModel: ObservableObject {
   @Published var isLoadingGetRecipes: Bool = false
   @Published var getRecipesError: RebudError?
   @Published var titleSearch: String = ""
+  @Published var favoritedRecipes: [RecipeEntity] = []
+  var favoritedRecipesReference: [String : RecipeEntity] = [:]
 
   private var cancellables = Set<AnyCancellable>()
 
@@ -106,6 +110,30 @@ final class RecipeViewModel: ObservableObject {
         clog("get recipes error", error)
         getRecipesError = (error as! RebudError)
         handleGetRecipeLoading(show: false)
+      }
+    }
+  }
+
+  func getFavoritedRecipes() {
+    Task { [favoritedRecipeRepository] in
+      async let favoritedRecipes = await favoritedRecipeRepository.getFavoritedRecipes()
+      async let favoritedRecipesReference = await favoritedRecipeRepository.favoritedRecipes
+      let tasks = await [favoritedRecipes, favoritedRecipesReference]
+      self.favoritedRecipes = tasks[0] as! [RecipeEntity]
+      self.favoritedRecipesReference = tasks[1] as! [String : RecipeEntity]
+      clog("favorited recipes", self.favoritedRecipes)
+    }
+  }
+
+  func addToFavorite(_ recipe: RecipeEntity) {
+    Task { [favoritedRecipeRepository] in
+      do {
+        _ = try await favoritedRecipeRepository.addToFavorite(recipe)
+        let favoritedRecipes = await favoritedRecipeRepository.favoritedRecipes
+        self.favoritedRecipesReference = favoritedRecipes
+        clog("add to favorite successfully", self.favoritedRecipes)
+      } catch {
+        clog("failed to add favorite recipe", (error as! RebudError).errorMessage)
       }
     }
   }

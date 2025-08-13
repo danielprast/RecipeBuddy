@@ -16,7 +16,9 @@ public protocol RecipeRepository {
 }
 
 
-public protocol FavoritedRecipeRepository {
+public protocol FavoritedRecipeRepository: Sendable {
+
+  var favoritedRecipes: [String : RecipeEntity] { get async }
 
   func getFavoritedRecipes() async -> [RecipeEntity]
 
@@ -45,6 +47,23 @@ public actor RecipeRepositoryImplementation {
   }
 
   // MARK: - • Recipe Repository
+
+  public var favoritedRecipes: [String : RecipeEntity] {
+    get async {
+      let recipes = await getFavoritedRecipes()
+
+      guard !recipes.isEmpty else {
+        return [:]
+      }
+
+      var favoritedRecipes: [String : RecipeEntity] = [:]
+      for recipe in recipes {
+        favoritedRecipes[recipe.id] = recipe
+      }
+
+      return favoritedRecipes
+    }
+  }
 
   public func getRecipes(title: String) async throws -> [RecipeEntity] {
     if await !networkConnectionChecker.isConnected {

@@ -26,35 +26,56 @@ public final actor RecipeLocalDataStoreImpl: RecipeLocalDataStore {
 
   private var favoritedRecipes: [String : RecipeResponseElement] = [:]
 
-  fileprivate func saveFavoritedRecipesToDisk() async {
-    UserDefaults.standard.set(
-      favoritedRecipes,
-      forKey: RecipeLocalData().favoritedDataKey
-    )
+  fileprivate func saveFavoritedRecipesToDisk() async throws {
+    let recipes = favoritedRecipes.map { $0.value }
+    let key = RecipeLocalData().favoritedDataKey
+    do {
+      let encoder = JSONEncoder()
+      encoder.outputFormatting = .prettyPrinted
+      let jsonData = try encoder.encode(recipes)
+      UserDefaults.standard.set(jsonData,forKey: key)
+    } catch {
+      throw RebudError.custom("Failed to save favorited recipes")
+    }
   }
 
   public func readFavoritedRecipes() async -> [RecipeResponseElement] {
+    let key = RecipeLocalData().favoritedDataKey
     guard
-      let persistentData = UserDefaults.standard.dictionary(forKey: RecipeLocalData().favoritedDataKey),
-      let favoritedData = persistentData as? [String : RecipeResponseElement]
+      let persistentData = UserDefaults.standard.data(forKey: key),
+      let recipes = JsonResolver.decodeJson(
+        from: persistentData,
+        outputType: [RecipeResponseElement].self
+      )
     else {
       return []
     }
-    favoritedRecipes = favoritedData
-    return favoritedRecipes.map { $0.value }
+
+    favoritedRecipes.removeAll()
+    for recipe in recipes {
+      favoritedRecipes[recipe.id] = recipe
+    }
+
+    return recipes
   }
   
   public func saveFavorite(_ recipe: RecipeResponseElement) async throws -> Bool {
     favoritedRecipes[recipe.id] = recipe
-    await saveFavoritedRecipesToDisk()
+    guard let _ = try? await saveFavoritedRecipesToDisk() else {
+      return false
+    }
     return true
   }
   
   public func removeFavorite(_ recipe: RecipeResponseElement) async throws -> Bool {
-    guard let deleted = favoritedRecipes.removeValue(forKey: recipe.id) else {
+    guard let _ = favoritedRecipes.removeValue(forKey: recipe.id) else {
       throw RebudError.custom("Failed to remove favorite for: \(recipe.title)")
     }
-    await saveFavoritedRecipesToDisk()
+
+    guard let _ = try? await saveFavoritedRecipesToDisk() else {
+      return false
+    }
+
     return favoritedRecipes[recipe.id] == nil
   }
 
