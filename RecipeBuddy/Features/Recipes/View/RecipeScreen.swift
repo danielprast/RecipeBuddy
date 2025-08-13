@@ -23,18 +23,24 @@ struct RecipeScreen: View {
 
   var body: some View {
     ZStack {
-      if let error = recipeData.getRecipesError {
-        ErrorView(message: error.errorMessage)
+      if recipeData.isLoadingGetRecipes {
+        ProgressView()
       } else {
-        if recipeData.recipes.isEmpty {
-          ErrorView(message: "No recipes found!")
+        if let error = recipeData.getRecipesError {
+          ErrorView(message: error.errorMessage)
         } else {
-          RecipeListView(recipeData: recipeData)
-            .environmentObject(connectionModel)
+          if recipeData.recipes.isEmpty {
+            ErrorView(message: "No recipes found!")
+          } else {
+            RecipeListView(recipeData: recipeData)
+              .environmentObject(connectionModel)
+          }
         }
       }
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .navigationTitle("Recipes")
+    .searchable(text: $recipeData.titleSearch, prompt: "Recipe name...")
     .onReceive(
       connectionModel.$isInternetAvailable,
       perform: { isAvailable in
