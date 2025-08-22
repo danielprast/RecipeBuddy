@@ -35,7 +35,7 @@ final class MainDependencyContainer {
     }
 
     func makeNetworkConnectionChecker(connReachability: ConnectionReachability) -> NetworkConnectionChecker {
-      NetworkConnectionCheckerImpl(reachability: connReachability)
+      NetworkConnectionCheckerImpl_V2(reachability: connReachability)
     }
 
     func makeMainViewModel() -> MainViewModel {

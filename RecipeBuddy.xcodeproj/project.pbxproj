@@ -111,11 +111,11 @@
 		20EF5ADE2E4B8EBC005E6423 = {
 			isa = PBXGroup;
 			children = (
-				207999502E4C253C003B308A /* RebudData */,
 				20EF5AE92E4B8EBC005E6423 /* RecipeBuddy */,
 				20EF5AF72E4B8EBE005E6423 /* RecipeBuddyTests */,
 				20EF5B012E4B8EBE005E6423 /* RecipeBuddyUITests */,
 				207999932E4C39C3003B308A /* Frameworks */,
+				207999502E4C253C003B308A /* RebudData */,
 				20EF5AE82E4B8EBC005E6423 /* Products */,
 			);
 			sourceTree = "<group>";

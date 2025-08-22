@@ -1,13 +1,22 @@
 {
-  "originHash" : "76a863119c1dd88cfe09c92c690e1a62f755554d59a5d6873420971141062b6c",
+  "originHash" : "b5b96117de44222890240fa7d8972dad6665860900303dc0bf5089bfc253f858",
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
+        "version" : "5.10.2"
+      }
+    },
     {
       "identity" : "bezetqit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/danielprast/BezetQit.git",
       "state" : {
-        "revision" : "87db1c02c64bc393b094abe7742c8aed5222b30f",
-        "version" : "1.1.0"
+        "revision" : "13e52942c93abfcd41218d369d0c67858b362631",
+        "version" : "1.2.1"
       }
     }
   ],
