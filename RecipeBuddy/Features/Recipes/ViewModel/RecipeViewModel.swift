@@ -84,12 +84,13 @@ final class RecipeViewModel: ObservableObject {
         return
       }
 
+      getRecipesError = nil
       handleGetRecipeLoading(show: true)
 
       do {
         let entities = try await repository.getRecipes(title: titleSearch)
-        handleGetRecipeLoading(show: false)
         update(recipes: entities)
+        handleGetRecipeLoading(show: false)
       } catch {
         clog("get recipes error", error)
         getRecipesError = (error as! RebudError)

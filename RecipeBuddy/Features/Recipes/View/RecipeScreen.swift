@@ -15,7 +15,6 @@ struct RecipeScreen: View {
 
   @EnvironmentObject var connectionModel: ConnectionReachabilityModel
   @ObservedObject var recipeData: RecipeViewModel
-  @State var counter = 0
 
   init(recipeData: RecipeViewModel) {
     self.recipeData = recipeData
@@ -41,13 +40,9 @@ struct RecipeScreen: View {
     .frame(maxWidth: .infinity, maxHeight: .infinity)
     .navigationTitle("Recipes")
     .searchable(text: $recipeData.titleSearch, prompt: "Recipe name...")
-    .onReceive(
-      connectionModel.$isInternetAvailable,
-      perform: { isAvailable in
-        guard isAvailable else { return }
-        recipeData.getInitialRecipes()
-      }
-    )
+    .onAppear {
+      recipeData.getInitialRecipes()
+    }
   }
 }
 
